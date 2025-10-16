@@ -26,13 +26,13 @@ router.get('/', async (req, res) => {
 router.post('/agendar', async (req, res) => {
     try {
         const { paciente_id, doctor_id, fecha, hora, motivo } = req.body;
-        
+
         // Verificar disponibilidad
         const citasOcupadas = await pool.query(
-            'SELECT hora FROM citas WHERE doctor_id = $1 AND fecha = $2 AND estado IN ($3, $4)',
-            [doctor_id, fecha, 'agendada', 'confirmada']
+            'SELECT hora FROM citas WHERE doctor_id = $1 AND fecha = $2 AND estado = ANY($3::text[])',
+            [doctor_id, fecha, ['agendada', 'confirmada']]
         );
-        
+
         const horariosOcupados = citasOcupadas.rows.map(cita => cita.hora);
         if (horariosOcupados.includes(hora)) {
             return res.status(400).json({ 
@@ -59,6 +59,7 @@ router.post('/agendar', async (req, res) => {
         });
     }
 });
+
 
 // Obtener horarios disponibles
 router.get('/horarios-disponibles/:doctorId/:fecha', async (req, res) => {
