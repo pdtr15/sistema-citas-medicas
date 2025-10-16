@@ -1,16 +1,20 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const cron = require('node-cron');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
+
+// CORS configurado para tu frontend en Netlify
 app.use(cors({
   origin: 'https://citas225.netlify.app',
   credentials: true
 }));
+
+// Body parser para recibir JSON en req.body
+app.use(express.json());
 
 // Importar rutas
 const citasRoutes = require('./routes/citas');
