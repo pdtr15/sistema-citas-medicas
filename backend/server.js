@@ -7,9 +7,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+  origin: true,  // Permite todos los orígenes
+  credentials: true
+}));
 
 // Importar rutas
 const citasRoutes = require('./routes/citas');

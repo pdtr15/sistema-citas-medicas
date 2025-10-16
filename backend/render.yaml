@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: citas-medicas-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: citas-medicas-db
+          property: connectionString
