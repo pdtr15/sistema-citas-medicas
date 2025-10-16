@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: true,  // Permite todos los orígenes
+  origin: 'https://citas225.netlify.app/',
   credentials: true
 }));
 
